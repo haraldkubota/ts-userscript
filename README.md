@@ -1,50 +1,13 @@
 # Userscripts + TS + Vite
 
-```
-❯ npm create monkey
-✔ Project name: … vite-userscript
-✔ Select a framework: › vanilla
-✔ Select a variant: › vanilla-ts
+Take this as a template for creating userscripts with TypeScript.
 
-Scaffolding project in /home/harald/js/userscript/parcel/vite-userscript...
+Including tests (in TypeScript) with Jest.
 
-Done. Now run:
-
-  cd vite-userscript
-  npm install
-  npm run dev
-
-❯ cd vite-userscript
-❯ npm install
-
-added 37 packages, and audited 38 packages in 4s
-
-12 packages are looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
-```
-
-## Fix build script
-
-Change this line in package.json:
-```
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-```
-to
-```
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-```
+Served by Vite.
 
 ## Run dev server
+It contains all GM_* grants
 ```
 npm run dev
 ```
@@ -63,8 +26,11 @@ lets you install the userscript file as if it were built by "npm run build" (spe
 
 ## TLS
 
+Setting up TLS (optional)
+
+Create certificates:
 ```
-step ca certificate --not-after=$((7*24))h m75q.lan m75q.crt m75q.key --provisioner 'myCA' --password-file ~/.step/pass/provisioner.txt
+step ca certificate --not-after=$((7*24))h m75q.lan m75q.crt m75q.key --provisioner 'myCA@home' --password-file ~/.step/pass/provisioner_pass.txt
 ```
 and edit vite.config.ts:
 ```
@@ -82,23 +48,14 @@ export default defineConfig({
     cert: fs.readFileSync('m75q.crt'),
    },
   },
-  plugins: [
-    monkey({
-      entry: 'src/main.ts',
-      userscript: {
-        icon: 'https://vitejs.dev/logo.svg',
-        namespace: 'npm/vite-plugin-monkey',
-        match: ['https://www.google.com/'],
-      },
-    }),
-  ],
+...
 });
 ```
-Renew the certificate with
+If needed, renew the certificate with
 ```
 step ca renew m75q.crt m75q.key
 ```
-Check validity with
+Check validity of the certificates with
 ```
 openssl x509 -in m75q.crt -enddate -noout
 ```
@@ -106,4 +63,9 @@ openssl x509 -in m75q.crt -enddate -noout
 ## Tests
 
 Tests are written in TypeScript in tests/
-Jest expects names like *.test.ts
+
+Jest expects names like *.test.tsa
+
+```
+npm run test
+```
