@@ -2,12 +2,12 @@
   window.addEventListener(
     "load",
     () => {
-      const titleElement: Element = document.querySelector("#comic [title]");
+      const titleElement = document.querySelector("#comic [title]") as HTMLElement;
       if (titleElement) {
-        const title: Element = titleElement.title;
-        let p: Element = document.createElement("p");
+        const title = titleElement.title;
+        let p = document.createElement("p");
         p.innerText = title;
-        document.querySelector("#comic").append(p);
+        document.querySelector("#comic")?.append(p);
         const mystyle = {
           "font-variant": "none",
           background: "lightgray",
@@ -15,11 +15,11 @@
         };
         Object.assign(p.style, mystyle);
       }
-      const currentComic: Element = document.querySelector(
+      const currentComic = document.querySelector(
         "div#middleContainer.box > a"
-      );
+      ) as HTMLElement;
       if (currentComic) {
-        let uriPath = currentComic.text.split("/");
+        let uriPath = currentComic.innerText.split("/");
         let currentComicNumber = 0;
         for (let i = uriPath.length - 1; i >= 0; --i) {
           let n = parseInt(uriPath[i]);
@@ -28,9 +28,9 @@
             break;
           }
         }
-        let div: HTMLDivElement = document.createElement("div");
-        let a: Element = document.createElement("a");
-        let link: Text = document.createTextNode(
+        let div = document.createElement("div");
+        let a = document.createElement("a");
+        let link = document.createTextNode(
           "https://www.explainxkcd.com/wiki/index.php/" + currentComicNumber
         );
         a.appendChild(link);
@@ -39,13 +39,10 @@
           "https://www.explainxkcd.com/wiki/index.php/" + currentComicNumber
         );
         div.appendChild(a);
-        document.querySelector("#comic").append(div);
+        document.querySelector("#comic")?.append(div);
       }
     },
     false
   );
 })();
-
-// export function add(a: number, b: number): number {
-//   return a+b;
-// }
+export {};
